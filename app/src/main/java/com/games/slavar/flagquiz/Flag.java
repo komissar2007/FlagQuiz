@@ -6,7 +6,16 @@ package com.games.slavar.flagquiz;
 public class Flag {
 
     private String name;
-    private String pictureUrl;
+    private String fileName;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Flag() {
     }
@@ -19,11 +28,11 @@ public class Flag {
         this.name = name;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setFileName(String pictureUrl) {
+        this.fileName = pictureUrl;
     }
 }
