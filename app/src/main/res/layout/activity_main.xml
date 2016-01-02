@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="New Button"
                 android:layout_weight="0.5"
-                android:id="@+id/resultButonB" />
+                android:id="@+id/resultButtonB" />
         </TableRow>
         <TableRow>
 
