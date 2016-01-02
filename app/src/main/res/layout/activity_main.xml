@@ -22,7 +22,7 @@
             android:id="@+id/flagImageButton"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
 
 
     </TableLayout>
@@ -32,37 +32,39 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/flag_section"
         android:background="@color/material_blue_grey_800">
+
         <TableRow>
 
             <Button
+                android:id="@+id/resultButton0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Button"
                 android:layout_weight="0.5"
-                android:id="@+id/resultButtonA" />
+                android:text="New Button" />
 
             <Button
+                android:id="@+id/resultButton1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Button"
                 android:layout_weight="0.5"
-                android:id="@+id/resultButtonB" />
+                android:text="New Button" />
         </TableRow>
+
         <TableRow>
 
             <Button
+                android:id="@+id/resultButton2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Button"
                 android:layout_weight="0.5"
-                android:id="@+id/resultButtonC" />
+                android:text="New Button" />
 
             <Button
+                android:id="@+id/resultButton3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Button"
                 android:layout_weight="0.5"
-                android:id="@+id/resultButtonD" />
+                android:text="New Button" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>

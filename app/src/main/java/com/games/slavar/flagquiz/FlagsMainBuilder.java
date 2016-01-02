@@ -2,13 +2,11 @@ package com.games.slavar.flagquiz;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.text.AutoText;
 import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Slavar on 12/31/2015.
@@ -38,8 +36,8 @@ public class FlagsMainBuilder {
                 Log.d(getClass().toString(), "id:" + flag.getId() + ", " + "fileName:" + flag.getFileName() + ", " + "Name:" + flag.getName());
                 flagArrayList.add(flag);
             }
-            
 
+            shuffleArray(flagArrayList);
             
 
         } catch (IOException e) {
