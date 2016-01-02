@@ -43,7 +43,7 @@ public class StageBuilder {
         answersHashSet.add(stage.getQuestion());
         Random rnd = new Random();
         int i=0;
-        while(answersHashSet.size()==4)
+        while(answersHashSet.size()<4)
         {
             i = rnd.nextInt(flagArrayList.size());
             answersHashSet.add(flagArrayList.get(i));
