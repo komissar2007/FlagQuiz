@@ -39,13 +39,12 @@ public class FlagsMainBuilder {
                 flagArrayList.add(flag);
             }
             
-            shuffleArray(flagArrayList);
+
             
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            assetManager.close();
             return flagArrayList;
         }
 

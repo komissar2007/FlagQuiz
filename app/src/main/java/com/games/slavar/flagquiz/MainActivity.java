@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FlagsMainBuilder flagMainBuilder = new FlagsMainBuilder();
         ArrayList<Flag> flagsArray = flagMainBuilder.buildFlagArray(getApplicationContext());
+        StageBuilder stageArrayList = new StageBuilder(flagsArray);
+        stageArrayList.populateQuestions();
 
 
     }
