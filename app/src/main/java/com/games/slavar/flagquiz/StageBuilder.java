@@ -13,6 +13,23 @@ import java.util.Random;
 public class StageBuilder {
 
     private ArrayList<Flag> flagArrayList;
+
+    public ArrayList<Stage> getStageArrayList() {
+        return stageArrayList;
+    }
+
+    public void setStageArrayList(ArrayList<Stage> stageArrayList) {
+        this.stageArrayList = stageArrayList;
+    }
+
+    public ArrayList<Flag> getFlagArrayList() {
+        return flagArrayList;
+    }
+
+    public void setFlagArrayList(ArrayList<Flag> flagArrayList) {
+        this.flagArrayList = flagArrayList;
+    }
+
     private ArrayList<Stage> stageArrayList = new ArrayList<Stage>();
 
 

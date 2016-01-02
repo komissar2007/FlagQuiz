@@ -18,40 +18,12 @@
         android:layout_marginBottom="10dp"
         android:background="@color/material_blue_grey_800">
 
-        <TableRow
+        <ImageButton
+            android:id="@+id/flagImageButton"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="150dp"
+            android:layout_weight="0.5"/>
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_weight="0.5"/>
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_weight="0.5"/>
-        </TableRow>
-
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="150dp">
-
-            <ImageButton
-                android:id="@+id/imageButton3"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_weight="0.5"/>
-
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_weight="0.5"/>
-        </TableRow>
 
     </TableLayout>
 
@@ -67,14 +39,14 @@
                 android:layout_height="wrap_content"
                 android:text="New Button"
                 android:layout_weight="0.5"
-                android:id="@+id/button" />
+                android:id="@+id/resultButtonA" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="New Button"
                 android:layout_weight="0.5"
-                android:id="@+id/button2" />
+                android:id="@+id/resultButonB" />
         </TableRow>
         <TableRow>
 
@@ -83,14 +55,14 @@
                 android:layout_height="wrap_content"
                 android:text="New Button"
                 android:layout_weight="0.5"
-                android:id="@+id/button3" />
+                android:id="@+id/resultButtonC" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="New Button"
                 android:layout_weight="0.5"
-                android:id="@+id/button4" />
+                android:id="@+id/resultButtonD" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>
