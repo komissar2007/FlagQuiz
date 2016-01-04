@@ -1,5 +1,6 @@
 package com.games.slavar.flagquiz;
 
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -75,6 +76,5 @@ public class MainActivity extends AppCompatActivity {
             answerButton[i].setText(answersArray[i].getName());
         }
     }
-
 
 }
