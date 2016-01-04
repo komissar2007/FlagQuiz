@@ -21,14 +21,14 @@ public class MainActivity extends AppCompatActivity {
     private Button[] answerButton = new Button[4];
     private ArrayList<Stage> stageArrayList = new ArrayList<Stage>() ;
     private int stage = 0;
-    private ProgressBar progressBar;
-    private int i =0;
+    private ProgressBar progressBar ;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBar = (ProgressBar) findViewById(R.id.answerProgressBar);
         FlagsMainBuilder flagMainBuilder = new FlagsMainBuilder();
         ArrayList<Flag> flagsArray = flagMainBuilder.buildFlagArray(getApplicationContext());
         StageBuilder stageBuilder = new StageBuilder(flagsArray);
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
         stage++;
         prepareStage();
+
     }
 
     public void prepareStage() throws IOException {
@@ -87,20 +88,21 @@ public class MainActivity extends AppCompatActivity {
     public void handleProgressBar()
     {
 
-        progressBar = (ProgressBar) findViewById(R.id.answerProgressBar);
-        progressBar.setProgress(i);
 
-        CountDownTimer mCountDownTimer = new CountDownTimer(5000,1000) {
+        progressBar.setProgress(100);
+
+        CountDownTimer mCountDownTimer = new CountDownTimer(10000,500) {
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.v("Log_tag", "Tick of Progress" + i + millisUntilFinished);
-                i++;
-                progressBar.setProgress(i);
+                int progress = (int) (millisUntilFinished/100);
+                progressBar.setProgress(progress);
 
             }
 
             @Override
             public void onFinish() {
+                Toast.makeText(getApplicationContext(), "finished",Toast.LENGTH_SHORT).show();
+                progressBar.setProgress(0);
 
             }
         };
