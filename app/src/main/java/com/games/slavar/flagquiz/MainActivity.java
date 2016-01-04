@@ -3,10 +3,13 @@ package com.games.slavar.flagquiz;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -17,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton flagImage;
     private Button[] answerButton = new Button[4];
     private ArrayList<Stage> stageArrayList = new ArrayList<Stage>() ;
-    int stage = 0;
+    private int stage = 0;
+    private ProgressBar progressBar;
+    private int i =0;
 
 
     @Override
@@ -75,6 +80,32 @@ public class MainActivity extends AppCompatActivity {
         {
             answerButton[i].setText(answersArray[i].getName());
         }
+
+        handleProgressBar();
+    }
+
+    public void handleProgressBar()
+    {
+
+        progressBar = (ProgressBar) findViewById(R.id.answerProgressBar);
+        progressBar.setProgress(i);
+
+        CountDownTimer mCountDownTimer = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.v("Log_tag", "Tick of Progress" + i + millisUntilFinished);
+                i++;
+                progressBar.setProgress(i);
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+
+        mCountDownTimer.start();
     }
 
 }
