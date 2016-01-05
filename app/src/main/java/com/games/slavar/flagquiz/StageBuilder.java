@@ -1,7 +1,13 @@
 package com.games.slavar.flagquiz;
 
+import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,8 +17,23 @@ import java.util.Random;
  * Created by Slava on 02-1-16.
  */
 public class StageBuilder {
-
     private ArrayList<Flag> flagArrayList;
+
+    private static StageBuilder stageBuilder = null;
+
+    protected StageBuilder() {
+    }
+
+    public static StageBuilder getInstance(){
+        if (stageBuilder == null)
+        {
+            stageBuilder = new StageBuilder();
+        }
+        StageBuilder stageBuilder = StageBuilder.stageBuilder;
+        return stageBuilder;
+    }
+
+
 
     public ArrayList<Stage> getStageArrayList() {
         return stageArrayList;
@@ -31,11 +52,6 @@ public class StageBuilder {
     }
 
     private ArrayList<Stage> stageArrayList = new ArrayList<Stage>();
-
-
-    public StageBuilder(ArrayList<Flag> flagArrayList) {
-        this.flagArrayList = flagArrayList;
-    }
 
     public void populateQuestions() {
         Stage stage;
@@ -67,5 +83,21 @@ public class StageBuilder {
         }
 
         stage.setAnswers(answersHashSet.toArray(new Flag[answersHashSet.size()]));
+    }
+
+    public void prepareStage(int stage, ImageButton flagImage, Button[] answerButton, MainActivity mainActivity) throws IOException {
+
+        flagImage.setImageBitmap(BitmapFactory.decodeStream(mainActivity.getResources().getAssets().open("flags/" +stageBuilder.getStageArrayList().get(stage).getQuestion().getFileName())));
+        flagImage.setContentDescription(stageBuilder.getStageArrayList().get(stage).getQuestion().getName());
+        Flag answersArray[] = stageBuilder.getStageArrayList().get(stage).getAnswers();
+        for (int i=0;i<answerButton.length;i++)
+        {
+            answerButton[i].setText(answersArray[i].getName());
+        }
+    }
+
+    public void populateFlag(Context applicationContext) {
+        FlagsMainBuilder flagMainBuilder = new FlagsMainBuilder();
+        flagArrayList = flagMainBuilder.buildFlagArray(applicationContext);
     }
 }

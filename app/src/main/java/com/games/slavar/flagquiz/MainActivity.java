@@ -15,29 +15,30 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton flagImage;
     private Button[] answerButton = new Button[4];
-    private ArrayList<Stage> stageArrayList = new ArrayList<Stage>() ;
+    private StageBuilder stageBuilder;
     private int stage = 0;
-    private ProgressBar progressBar ;
-
-
+    private int numberOfStages = 10;
+    private ProgressBar progressBar;
+    private CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        progressBar = (ProgressBar) findViewById(R.id.answerProgressBar);
-        FlagsMainBuilder flagMainBuilder = new FlagsMainBuilder();
-        ArrayList<Flag> flagsArray = flagMainBuilder.buildFlagArray(getApplicationContext());
-        StageBuilder stageBuilder = new StageBuilder(flagsArray);
-        stageBuilder.populateQuestions();
-        stageArrayList = stageBuilder.getStageArrayList();
         flagImage = (ImageButton) findViewById(R.id.flagImageButton);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        stageBuilder = StageBuilder.getInstance();
+        stageBuilder.populateFlag(getApplicationContext());
+        stageBuilder.populateQuestions();
         assignAnswers();
         try {
-            prepareStage();
+            stageBuilder.prepareStage(stage, flagImage, answerButton, this);
+            setTimer();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,52 +63,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkResult(String s) throws IOException {
-
+        countDownTimer.cancel();
         if (flagImage.getContentDescription().equals(s)) {
-            Toast.makeText(this, "Correct answer!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Correct answer!", LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Wrong answer!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Wrong answer!", LENGTH_SHORT).show();
+        }
+        Log.d("Slava","stage: " + stage);
+        if (stage==10)
+        {
+            finish();
+
         }
         stage++;
-        prepareStage();
+        setTimer();
+        stageBuilder.prepareStage(stage, flagImage, answerButton, this);
 
     }
 
-    public void prepareStage() throws IOException {
-        flagImage.setImageBitmap(BitmapFactory.decodeStream(getResources().getAssets().open("flags/" + stageArrayList.get(stage).getQuestion().getFileName())));
-        flagImage.setContentDescription(stageArrayList.get(stage).getQuestion().getName());
-        Flag answersArray[] = stageArrayList.get(stage).getAnswers();
-        for (int i=0;i<answerButton.length;i++)
-        {
-            answerButton[i].setText(answersArray[i].getName());
-        }
 
-        handleProgressBar();
-    }
 
-    public void handleProgressBar()
+    private void setTimer()
     {
-
-
         progressBar.setProgress(100);
-
-        CountDownTimer mCountDownTimer = new CountDownTimer(10000,500) {
+        countDownTimer = new CountDownTimer(10000,100) {
             @Override
             public void onTick(long millisUntilFinished) {
-                int progress = (int) (millisUntilFinished/100);
-                progressBar.setProgress(progress);
+
+                progressBar.setProgress((int)millisUntilFinished/100);
 
             }
 
             @Override
             public void onFinish() {
-                Toast.makeText(getApplicationContext(), "finished",Toast.LENGTH_SHORT).show();
-                progressBar.setProgress(0);
+                try {
+                    checkResult("");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
-        };
+        }.start();
 
-        mCountDownTimer.start();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Slava:","onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("Slava:", "onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Slava:", "onDestroy");
+        countDownTimer.cancel();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Slava:", "onResart");
+    }
 }
