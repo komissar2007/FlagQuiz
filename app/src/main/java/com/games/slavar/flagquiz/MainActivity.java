@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private int numberOfStages = 10;
     private ProgressBar progressBar;
     private CountDownTimer countDownTimer;
+    private ScoreBoard scoreBoard = new ScoreBoard();
+    private long timeLeft = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +69,14 @@ public class MainActivity extends AppCompatActivity {
         countDownTimer.cancel();
         if (flagImage.getContentDescription().equals(s)) {
             Toast.makeText(this, "Correct answer!", LENGTH_SHORT).show();
+            scoreBoard.updateScore(timeLeft);
         } else {
             Toast.makeText(this, "Wrong answer!", LENGTH_SHORT).show();
         }
         Log.d("Slava","stage: " + stage);
         if (stage==10)
         {
+            Toast.makeText(this, "your score is: " + scoreBoard.getScore(), LENGTH_SHORT).show();
             finish();
 
         }
@@ -90,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
 
+                timeLeft = millisUntilFinished;
                 progressBar.setProgress((int)millisUntilFinished/100);
 
             }
@@ -124,6 +130,12 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("Slava:", "onDestroy");
         countDownTimer.cancel();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Slava:", "onResume");
     }
 
     @Override
