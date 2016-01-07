@@ -5,11 +5,9 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -29,8 +27,7 @@ public class StageBuilder {
         {
             stageBuilder = new StageBuilder();
         }
-        StageBuilder stageBuilder = StageBuilder.stageBuilder;
-        return stageBuilder;
+        return StageBuilder.stageBuilder;
     }
 
 
@@ -51,7 +48,7 @@ public class StageBuilder {
         this.flagArrayList = flagArrayList;
     }
 
-    private ArrayList<Stage> stageArrayList = new ArrayList<Stage>();
+    private ArrayList<Stage> stageArrayList = new ArrayList<>();
 
     public void populateQuestions() {
         Stage stage;
@@ -72,10 +69,10 @@ public class StageBuilder {
 
     public void populateAnswers(Stage stage)
     {
-        HashSet<Flag> answersHashSet = new HashSet<Flag>();
+        HashSet<Flag> answersHashSet = new HashSet<>();
         answersHashSet.add(stage.getQuestion());
         Random rnd = new Random();
-        int i=0;
+        int i;
         while(answersHashSet.size()<4)
         {
             i = rnd.nextInt(flagArrayList.size());
@@ -85,7 +82,7 @@ public class StageBuilder {
         stage.setAnswers(answersHashSet.toArray(new Flag[answersHashSet.size()]));
     }
 
-    public void prepareStage(int stage, ImageButton flagImage, Button[] answerButton, MainActivity mainActivity) throws IOException {
+    public void prepareStage(int stage, ImageButton flagImage, Button[] answerButton, SceneFragment mainActivity) throws IOException {
 
         flagImage.setImageBitmap(BitmapFactory.decodeStream(mainActivity.getResources().getAssets().open("flags/" +stageBuilder.getStageArrayList().get(stage).getQuestion().getFileName())));
         flagImage.setContentDescription(stageBuilder.getStageArrayList().get(stage).getQuestion().getName());

@@ -4,9 +4,13 @@ import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -17,7 +21,7 @@ import java.util.ArrayList;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
-public class MainActivity extends AppCompatActivity {
+public class SceneFragment extends Fragment {
 
     private ImageButton flagImage;
     private Button[] answerButton = new Button[4];
@@ -29,14 +33,34 @@ public class MainActivity extends AppCompatActivity {
     private ScoreBoard scoreBoard = new ScoreBoard();
     private long timeLeft = 0;
 
+    @Nullable
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.activity_main, container, false);
+        flagImage = (ImageButton) view.findViewById(R.id.flagImageButton);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        stageBuilder = StageBuilder.getInstance();
+        stageBuilder.populateFlag(getActivity());
+        stageBuilder.populateQuestions();
+        assignAnswers(view);
+        try {
+            stageBuilder.prepareStage(stage, flagImage, answerButton, this);
+            setTimer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return view;
+    }
+
+/*    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         flagImage = (ImageButton) findViewById(R.id.flagImageButton);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         stageBuilder = StageBuilder.getInstance();
-        stageBuilder.populateFlag(getApplicationContext());
+        stageBuilder.populateFlag(getActivity());
         stageBuilder.populateQuestions();
         assignAnswers();
         try {
@@ -45,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    private void assignAnswers() {
+    private void assignAnswers(View view) {
         for (int i = 0; i < answerButton.length; i++) {
-            answerButton[i] = (Button) findViewById(getResources().getIdentifier("resultButton" + i, "id", getPackageName()));
+            answerButton[i] = (Button) view.findViewById(getResources().getIdentifier("resultButton" + i, "id", getActivity().getPackageName()));
             answerButton[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -68,16 +92,16 @@ public class MainActivity extends AppCompatActivity {
     private void checkResult(String s) throws IOException {
         countDownTimer.cancel();
         if (flagImage.getContentDescription().equals(s)) {
-            Toast.makeText(this, "Correct answer!", LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Correct answer!", LENGTH_SHORT).show();
             scoreBoard.updateScore(timeLeft);
         } else {
-            Toast.makeText(this, "Wrong answer!", LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Wrong answer!", LENGTH_SHORT).show();
         }
         Log.d("Slava","stage: " + stage);
         if (stage==10)
         {
-            Toast.makeText(this, "your score is: " + scoreBoard.getScore(), LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(getActivity(), "your score is: " + scoreBoard.getScore(), LENGTH_SHORT).show();
+            getActivity().finish();
 
         }
         stage++;
@@ -114,33 +138,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         Log.d("Slava:","onPause");
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         Log.d("Slava:", "onStop");
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         Log.d("Slava:", "onDestroy");
         countDownTimer.cancel();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         Log.d("Slava:", "onResume");
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("Slava:", "onResart");
-    }
 }
