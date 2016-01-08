@@ -1,11 +1,13 @@
 package com.games.slavar.flagquiz;
 
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.games.slavar.flagquiz.menu.MenuFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +30,7 @@ public class SceneFragment extends Fragment {
 
     private ImageButton flagImage;
     private Button[] answerButton = new Button[4];
+
     private StageBuilder stageBuilder;
     private int stage = 0;
     private int numberOfStages = 10;
@@ -33,7 +39,6 @@ public class SceneFragment extends Fragment {
     private ScoreBoard scoreBoard = new ScoreBoard();
     private long timeLeft = 0;
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -92,17 +97,24 @@ public class SceneFragment extends Fragment {
     private void checkResult(String s) throws IOException {
         countDownTimer.cancel();
         if (flagImage.getContentDescription().equals(s)) {
-            Toast.makeText(getActivity(), "Correct answer!", LENGTH_SHORT).show();
-            scoreBoard.updateScore(timeLeft);
+            scoreBoard.updateScore(timeLeft,(TextView)getView().findViewById(R.id.scoreTextView));
         } else {
-            Toast.makeText(getActivity(), "Wrong answer!", LENGTH_SHORT).show();
+            /*TODO Wrong answer*/
         }
         Log.d("Slava","stage: " + stage);
         if (stage==10)
         {
-            Toast.makeText(getActivity(), "your score is: " + scoreBoard.getScore(), LENGTH_SHORT).show();
-            getActivity().finish();
-
+            /*TODO game finished */
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Your Score is: ")
+                    .setMessage(String.valueOf(scoreBoard.getScore()))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            getFragmentManager().beginTransaction().replace(R.id.fragmentConntainer, new MenuFragment()).commit();
+                        }
+                    })
+                    .show();
         }
         stage++;
         setTimer();

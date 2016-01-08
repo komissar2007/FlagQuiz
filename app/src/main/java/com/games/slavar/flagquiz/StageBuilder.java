@@ -52,6 +52,7 @@ public class StageBuilder {
 
     public void populateQuestions() {
         Stage stage;
+        stageArrayList.clear();
         for (Flag flag : flagArrayList) {
             stage = new Stage();
             stage.setQuestion(flag);
