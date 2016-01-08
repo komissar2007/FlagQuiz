@@ -58,23 +58,6 @@ public class SceneFragment extends Fragment {
         return view;
     }
 
-/*    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        flagImage = (ImageButton) findViewById(R.id.flagImageButton);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        stageBuilder = StageBuilder.getInstance();
-        stageBuilder.populateFlag(getActivity());
-        stageBuilder.populateQuestions();
-        assignAnswers();
-        try {
-            stageBuilder.prepareStage(stage, flagImage, answerButton, this);
-            setTimer();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     private void assignAnswers(View view) {
         for (int i = 0; i < answerButton.length; i++) {
@@ -97,24 +80,15 @@ public class SceneFragment extends Fragment {
     private void checkResult(String s) throws IOException {
         countDownTimer.cancel();
         if (flagImage.getContentDescription().equals(s)) {
-            scoreBoard.updateScore(timeLeft,(TextView)getView().findViewById(R.id.scoreTextView));
+            scoreBoard.updateScore(timeLeft, (TextView) getView().findViewById(R.id.scoreTextView));
         } else {
             /*TODO Wrong answer*/
         }
-        Log.d("Slava","stage: " + stage);
-        if (stage==10)
-        {
-            /*TODO game finished */
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("Your Score is: ")
-                    .setMessage(String.valueOf(scoreBoard.getScore()))
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                            getFragmentManager().beginTransaction().replace(R.id.fragmentConntainer, new MenuFragment()).commit();
-                        }
-                    })
-                    .show();
+        Log.d("Slava", "stage: " + stage);
+        if (stage == 10) {
+            countDownTimer.cancel();
+            dialogPopup();
+            return;
         }
         stage++;
         setTimer();
@@ -122,17 +96,28 @@ public class SceneFragment extends Fragment {
 
     }
 
+    private void dialogPopup() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Your Score is: ")
+                .setMessage(String.valueOf(scoreBoard.getScore()))
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        getFragmentManager().beginTransaction().replace(R.id.fragmentConntainer, new MenuFragment()).commit();
+                    }
+                })
+                .show();
+    }
 
 
-    private void setTimer()
-    {
+    private void setTimer() {
         progressBar.setProgress(100);
-        countDownTimer = new CountDownTimer(10000,100) {
+        countDownTimer = new CountDownTimer(10000, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
 
                 timeLeft = millisUntilFinished;
-                progressBar.setProgress((int)millisUntilFinished/100);
+                progressBar.setProgress((int) millisUntilFinished / 100);
 
             }
 
@@ -152,7 +137,7 @@ public class SceneFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Log.d("Slava:","onPause");
+        Log.d("Slava:", "onPause");
     }
 
     @Override
