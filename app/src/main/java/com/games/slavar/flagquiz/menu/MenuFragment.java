@@ -28,7 +28,9 @@ public class MenuFragment extends Fragment {
         newGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            getFragmentManager().beginTransaction().replace(R.id.fragmentConntainer,new SceneFragment()).commit();
+                RegionDialogFragment regionDialogFragment = new RegionDialogFragment();
+                regionDialogFragment.show(getFragmentManager(),"Region fragment");
+            //getFragmentManager().beginTransaction().replace(R.id.fragmentConntainer,new SceneFragment()).commit();
 
             }
         });
