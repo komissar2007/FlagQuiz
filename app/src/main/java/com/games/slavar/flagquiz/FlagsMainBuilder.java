@@ -15,20 +15,20 @@ public class FlagsMainBuilder {
     private int counterId = 0;
     private Flag flag = null;
 
-    public ArrayList<Flag> buildFlagArray(Context applicationContext) {
+    public ArrayList<Flag> buildFlagArray(Context applicationContext, String region) {
         AssetManager assetManager = null;
         ArrayList<Flag> flagArrayList = new ArrayList<Flag>();
 
         try {
             assetManager = applicationContext.getAssets();
-            String flags[] = assetManager.list("flags");
+            String flags[] = assetManager.list("flags/" + region);
 
 
             for (String flagName : flags) {
                 counterId++;
                 flag = new Flag();
                 flag.setFileName(flagName);
-                flagName = flagName.replace("Europe-", "");
+                flagName = flagName.replace(region + "-", "");
                 flagName = flagName.replace(".png", "");
                 flagName = flagName.replace("_", " ");
                 flag.setName(flagName);

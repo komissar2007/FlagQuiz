@@ -39,14 +39,25 @@ public class SceneFragment extends Fragment {
     private ScoreBoard scoreBoard = new ScoreBoard();
     private long timeLeft = 0;
 
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    private String region;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.activity_main, container, false);
         flagImage = (ImageButton) view.findViewById(R.id.flagImageButton);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        setRegion(getArguments().get(getResources().getString(R.string.region)).toString());
         stageBuilder = StageBuilder.getInstance();
-        stageBuilder.populateFlag(getActivity());
+        stageBuilder.populateFlag(getActivity(),region);
         stageBuilder.populateQuestions();
         assignAnswers(view);
         try {

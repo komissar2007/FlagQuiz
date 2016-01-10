@@ -84,8 +84,7 @@ public class StageBuilder {
     }
 
     public void prepareStage(int stage, ImageButton flagImage, Button[] answerButton, SceneFragment mainActivity) throws IOException {
-
-        flagImage.setImageBitmap(BitmapFactory.decodeStream(mainActivity.getResources().getAssets().open("flags/" +stageBuilder.getStageArrayList().get(stage).getQuestion().getFileName())));
+        flagImage.setImageBitmap(BitmapFactory.decodeStream(mainActivity.getResources().getAssets().open("flags/" + mainActivity.getRegion()+ "/" +stageBuilder.getStageArrayList().get(stage).getQuestion().getFileName())));
         flagImage.setContentDescription(stageBuilder.getStageArrayList().get(stage).getQuestion().getName());
         Flag answersArray[] = stageBuilder.getStageArrayList().get(stage).getAnswers();
         for (int i=0;i<answerButton.length;i++)
@@ -94,8 +93,8 @@ public class StageBuilder {
         }
     }
 
-    public void populateFlag(Context applicationContext) {
+    public void populateFlag(Context applicationContext, String region) {
         FlagsMainBuilder flagMainBuilder = new FlagsMainBuilder();
-        flagArrayList = flagMainBuilder.buildFlagArray(applicationContext);
+        flagArrayList = flagMainBuilder.buildFlagArray(applicationContext, region);
     }
 }
