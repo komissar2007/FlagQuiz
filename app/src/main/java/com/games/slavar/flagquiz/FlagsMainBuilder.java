@@ -28,9 +28,10 @@ public class FlagsMainBuilder {
                 counterId++;
                 flag = new Flag();
                 flag.setFileName(flagName);
+                flagName = flagName.replace("_", " ");
                 flagName = flagName.replace(region + "-", "");
                 flagName = flagName.replace(".png", "");
-                flagName = flagName.replace("_", " ");
+
                 flag.setName(flagName);
                 flag.setId(counterId);
                 Log.d(getClass().toString(), "id:" + flag.getId() + ", " + "fileName:" + flag.getFileName() + ", " + "Name:" + flag.getName());
